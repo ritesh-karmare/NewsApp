@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NewsApp MAF</string>
+    <string name="list_to_detail">ListItemToDetailView</string>
+</resources>

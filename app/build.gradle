@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.maf.assignment.newsapp"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_URL", '"https://newsapi.org"'
+        buildConfigField "String", "API_KEY", '"36738822486a4e7e93d1c8f7e9d27053"'
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+ext {
+
+    APP_COMPAT = "1.0.2"
+    ANDROID_X = "1.0.0"
+    CHROME_CUSTOM_TABS = "28.0.0"
+    CONSTRAINT_LAYOUT = "1.1.3"
+
+    OKHTTP = '3.11.0'
+    RETROFIT = '2.4.0'
+    GSON = '2.8.5'
+
+    GLIDE = '4.7.1'
+    GLIDE_COMPILER = '4.6.1'
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:$APP_COMPAT"
+    implementation "androidx.constraintlayout:constraintlayout:$CONSTRAINT_LAYOUT"
+    implementation "androidx.recyclerview:recyclerview:$ANDROID_X"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$ANDROID_X"
+    implementation "androidx.cardview:cardview:$ANDROID_X"
+    implementation "com.android.support:customtabs:28.0.0"
+
+    // Retrofit and OkHttp networking libraries
+    implementation "com.squareup.okhttp3:logging-interceptor:$OKHTTP"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT"
+    implementation "com.google.code.gson:gson:$GSON"
+
+    // Glide - imageLoading
+    implementation "com.github.bumptech.glide:glide:$GLIDE"
+    annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_COMPILER"
+
+
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}
