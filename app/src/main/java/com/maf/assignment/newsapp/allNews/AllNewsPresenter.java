@@ -1,4 +1,4 @@
-package com.maf.assignment.newsapp.alNews;
+package com.maf.assignment.newsapp.allNews;
 
 import com.maf.assignment.newsapp.network.APIImpl;
 import com.maf.assignment.newsapp.network.ApiClient;
@@ -23,7 +23,7 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
     }
 
     @Override
-    public void fetchAllNews() {
+    public void fetchAllNews(final boolean isLoadMore) {
 
         try {
 
@@ -44,10 +44,10 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
 
                             if (newsData != null &&
                                     newsData.getArticles() != null &&
-                                    newsData.getArticles().size() > 0){
-                                viewCallback.poulateAllNews(newsData.getArticles());
+                                    newsData.getArticles().size() > 0) {
+                                viewCallback.poulateAllNews(newsData.getArticles(), isLoadMore);
                             }
-
+                            managePageNum(true);
                         }
 
                     } catch (Exception e) {
@@ -58,6 +58,7 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
                 @Override
                 public void onFailure(@NonNull Call<AllNewsRes> call, @NonNull Throwable t) {
                     t.printStackTrace();
+                    managePageNum(false);
 
                 }
             });

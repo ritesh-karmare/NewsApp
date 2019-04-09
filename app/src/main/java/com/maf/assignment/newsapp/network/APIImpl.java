@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 public interface APIImpl {
 
     // Get all news
-    @GET("/v2/everything?sources=bbc-news")
+    @GET("/v2/everything?sources=bbc-news&pageSize=10")
     Call<AllNewsRes> getAllNews(@Query("page") int pageNum);
 
 

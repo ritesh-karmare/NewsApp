@@ -1,4 +1,4 @@
-package com.maf.assignment.newsapp.alNews;
+package com.maf.assignment.newsapp.allNews;
 
 import android.content.Context;
 import android.net.Uri;
@@ -22,12 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Ritesh on 04/09/2019.
  */
 
-class AllNewsAdapter extends RecyclerView.Adapter<AllNewsViewHolder> {
+class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
     private List<ArticleData> allNewsList;
     private Context context;
 
-    public AllNewsAdapter(Context context) {
+    AllNewsAdapter(Context context) {
         this.context = context;
         allNewsList = new ArrayList<>();
     }
@@ -35,14 +37,50 @@ class AllNewsAdapter extends RecyclerView.Adapter<AllNewsViewHolder> {
 
     @NonNull
     @Override
-    public AllNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_news, parent, false);
-        return new AllNewsViewHolder(itemView);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
+            return new AllNewsViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new LoadingViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllNewsViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
+
+        if (viewHolder instanceof AllNewsViewHolder) {
+            populateItemRows((AllNewsViewHolder) viewHolder, position);
+        } else if (viewHolder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) viewHolder, position);
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return allNewsList.size();
+    }
+
+    /**
+     * The following method decides the type of ViewHolder to display in the RecyclerView
+     *
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return allNewsList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    // Populate item with news headline and image
+    private void populateItemRows(AllNewsViewHolder holder, final int position) {
 
         final ArticleData newsArticle = allNewsList.get(position);
 
@@ -64,6 +102,7 @@ class AllNewsAdapter extends RecyclerView.Adapter<AllNewsViewHolder> {
 
     }
 
+    // OnClick of news item, redirect to new's source url
     private void redirectToNewsPage(String newsUrl) {
         try {
 
@@ -83,21 +122,21 @@ class AllNewsAdapter extends RecyclerView.Adapter<AllNewsViewHolder> {
 
     }
 
-    @Override
-    public int getItemCount() {
-        return allNewsList.size();
+    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
     }
 
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
-
+    /*
+    Helper methods
+     */
     void addAll(List<ArticleData> allNewsList) {
         this.allNewsList.addAll(allNewsList);
     }
 
     void reset() {
         this.allNewsList.clear();
+    }
+
+    List<ArticleData> getList() {
+        return allNewsList;
     }
 }

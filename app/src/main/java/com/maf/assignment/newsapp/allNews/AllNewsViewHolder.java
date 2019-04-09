@@ -1,4 +1,4 @@
-package com.maf.assignment.newsapp.alNews;
+package com.maf.assignment.newsapp.allNews;
 
 import android.view.View;
 import android.widget.ImageView;

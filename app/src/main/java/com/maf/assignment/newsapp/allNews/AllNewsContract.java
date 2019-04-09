@@ -1,4 +1,4 @@
-package com.maf.assignment.newsapp.alNews;
+package com.maf.assignment.newsapp.allNews;
 
 import com.maf.assignment.newsapp.network.responseModel.ArticleData;
 
@@ -12,14 +12,14 @@ public interface AllNewsContract {
 
     interface Presenter {
 
-        void fetchAllNews();
+        void fetchAllNews(boolean isLoadMore);
 
         void unBind();
     }
 
     interface View {
 
-        void poulateAllNews(List<ArticleData> allNewsList);
+        void poulateAllNews(List<ArticleData> allNewsList, boolean isLoadMore);
 
     }
 
