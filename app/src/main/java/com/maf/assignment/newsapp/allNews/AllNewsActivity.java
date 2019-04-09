@@ -1,6 +1,7 @@
 package com.maf.assignment.newsapp.allNews;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.maf.assignment.newsapp.R;
 import com.maf.assignment.newsapp.network.responseModel.ArticleData;
@@ -86,13 +87,31 @@ public class AllNewsActivity extends AppCompatActivity implements AllNewsContrac
 
     @Override
     public void poulateAllNews(List<ArticleData> allNewsList, boolean isLoadMore) {
+        revokeLoadingMore(isLoadMore);
+        allNewsAdapter.addAll(allNewsList);
+        allNewsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFailure(int errCode, boolean isLoadMore) {
+        revokeLoadingMore(isLoadMore);
+        switch (errCode) {
+            case -1:
+                Toast.makeText(this, getString(R.string.err_connecting), Toast.LENGTH_SHORT).show();
+                break;
+            case 426:
+                Toast.makeText(this, getString(R.string.err_too_many_request), Toast.LENGTH_SHORT).show();
+            default:
+                Toast.makeText(this, getString(R.string.err_server), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void revokeLoadingMore(boolean isLoadMore) {
         if (isLoadMore) {
             isLoading = false;
             allNewsAdapter.getList().remove(allNewsAdapter.getList().size() - 1);
             allNewsAdapter.notifyItemRemoved(allNewsAdapter.getList().size());
         }
-        allNewsAdapter.addAll(allNewsList);
-        allNewsAdapter.notifyDataSetChanged();
     }
 
     @Override

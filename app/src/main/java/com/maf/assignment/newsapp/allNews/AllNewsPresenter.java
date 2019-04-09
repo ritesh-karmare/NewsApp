@@ -24,34 +24,31 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
 
     @Override
     public void fetchAllNews(final boolean isLoadMore) {
-
         try {
 
             APIImpl apiImpl = ApiClient.getClient().create(APIImpl.class);
-
-
             Call<AllNewsRes> call = apiImpl.getAllNews(pageNum);
-
             call.enqueue(new Callback<AllNewsRes>() {
                 @Override
                 public void onResponse(@NonNull Call<AllNewsRes> call, @NonNull Response<AllNewsRes> response) {
-
                     try {
-
                         if (response.isSuccessful()) {
-
                             AllNewsRes newsData = response.body();
-
                             if (newsData != null &&
                                     newsData.getArticles() != null &&
                                     newsData.getArticles().size() > 0) {
-                                viewCallback.poulateAllNews(newsData.getArticles(), isLoadMore);
+                                if (viewCallback != null)
+                                    viewCallback.poulateAllNews(newsData.getArticles(), isLoadMore);
+                                managePageNum(true);
                             }
-                            managePageNum(true);
+                        } else {
+                            managePageNum(false);
+                            if (viewCallback != null)
+                                viewCallback.onFailure(426, isLoadMore);
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
+                        managePageNum(false);
                     }
                 }
 
@@ -59,12 +56,13 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
                 public void onFailure(@NonNull Call<AllNewsRes> call, @NonNull Throwable t) {
                     t.printStackTrace();
                     managePageNum(false);
-
+                    if (viewCallback != null)
+                        viewCallback.onFailure(-1,isLoadMore);
                 }
             });
-
         } catch (Exception e) {
             e.printStackTrace();
+            managePageNum(false);
         }
     }
 
@@ -73,6 +71,7 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
         viewCallback = null;
     }
 
+    // Increment the pageNum if req was successful, else decrement
     private void managePageNum(boolean isIncrement) {
         if (isIncrement)
             pageNum++;

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NewsApp MAF</string>
     <string name="list_to_detail">ListItemToDetailView</string>
+    <string name="err_connecting">There seem to be an problem connecting to the server.</string>
+    <string name="err_too_many_request">Hold on !! That\'s alot of requests</string>
+    <string name="err_server">Something\'s not right with the server. Please try again after sometime.</string>
 </resources>
