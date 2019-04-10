@@ -1,21 +1,25 @@
 package com.maf.assignment.newsapp.allNews;
 
+import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.maf.assignment.newsapp.R;
 import com.maf.assignment.newsapp.network.responseModel.ArticleData;
+import com.maf.assignment.newsapp.newsDetails.NewsDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -80,7 +84,7 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     // Populate item with news headline and image
-    private void populateItemRows(AllNewsViewHolder holder, final int position) {
+    private void populateItemRows(final AllNewsViewHolder holder, final int position) {
 
         final ArticleData newsArticle = allNewsList.get(position);
 
@@ -96,24 +100,23 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.cvNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectToNewsPage(allNewsList.get(position).getUrl());
+                redirectToNewsPage(holder.ivBanners,allNewsList.get(position));
             }
         });
 
     }
 
-    // OnClick of news item, redirect to new's source url
-    private void redirectToNewsPage(String newsUrl) {
+    // Starting news details activity with shared element transition
+    private void redirectToNewsPage(ImageView ivBanner, ArticleData articleData) {
         try {
+            Intent newsDetailsIntent = new Intent(context, NewsDetailsActivity.class);
+            newsDetailsIntent.putExtra("articleData", articleData);
 
-            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(context.getResources()
-                            .getColor(R.color.colorPrimary))
-                    .setShowTitle(true)
-                    .build();
+            ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,
+                            ivBanner,context.getResources().getString(R.string.list_to_detail));
 
-            customTabsIntent.launchUrl(context, Uri.parse(newsUrl));
+            ActivityCompat.startActivity(context, newsDetailsIntent, options.toBundle());
 
         } catch (Exception e) {
             e.printStackTrace();

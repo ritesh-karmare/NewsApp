@@ -3,11 +3,13 @@ package com.maf.assignment.newsapp.network.responseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Ritesh on 04/09/2019.
  */
 
-public class SourceData {
+public class SourceData implements Serializable {
 
     @SerializedName("id")
     @Expose

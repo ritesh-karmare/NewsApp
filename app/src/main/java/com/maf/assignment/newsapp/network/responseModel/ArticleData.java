@@ -1,13 +1,18 @@
 package com.maf.assignment.newsapp.network.responseModel;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by Ritesh on 04/09/2019.
  */
 
-public class ArticleData {
+public class ArticleData implements Serializable {
 
     @SerializedName("source")
     @Expose
@@ -33,6 +38,8 @@ public class ArticleData {
     @SerializedName("content")
     @Expose
     private String content;
+
+
 
     public SourceData getSource() {
         return sourceData;
@@ -97,5 +104,4 @@ public class ArticleData {
     public void setContent(String content) {
         this.content = content;
     }
-
 }
