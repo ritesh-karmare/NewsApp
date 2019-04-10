@@ -1,5 +1,20 @@
 # NewsApp-MAF
-This is a news app demo for Majid Al Futtaim
+This is a news app demo for *Majid Al Futtaim*
+
+### Application Functionality/Features
+
+1. Get all the news from News API("https://newsapi.org") and display the list of the news with image and title (headline)
+2. OnClick of news item in the list, redirect to news detail screen.
+3. Errors, in any case, are displayed via Toast.
+
+
+
+#### Screen 1 - News List
+<img src="https://github.com/ritesh-karmare/NewsApp-MAF/blob/master/news_list.png" width="200" height="400" />
+
+
+#### Screen 2 - News Details
+<img src="https://github.com/ritesh-karmare/NewsApp-MAF/blob/master/news_detail.png" width="200" height="400" />
 
 ### Architecture
 
@@ -15,10 +30,3 @@ From View the Presenter is initialised and we call the function in the Presenter
 1. Networking - *Retrofit, OkHttp* <br />
 2. JSON2Data - *GSON* <br />
 3. imageLoading - *Glide*
-
-
-### Application Functionality/Features
-
-1. Get all the news from News API("https://newsapi.org") and display the list of the news with image and title (headline)
-2. OnClick of news item in the list, redirect to news detail screen.
-3. Errors, in any case, are displayed via Toast.
