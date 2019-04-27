@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # NewsApp
+=======
+# NewsApp-MAF
+>>>>>>> 325ff10358a020d4814c6f351d36db71f438de4e
 
 ### Application Functionality/Features
 
@@ -28,4 +32,4 @@ From View the Presenter is initialised and we call the function in the Presenter
 
 1. Networking - *Retrofit, OkHttp* <br />
 2. JSON2Data - *GSON* <br />
-3. imageLoading - *Glide*
+3. ImageLoading - *Glide*
