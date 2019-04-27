@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.maf.assignment.newsapp">
+    package="rk.information.news">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,15 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name=".newsDetails.NewsDetailsActivity"
+            android:name="rk.information.news.newsDetails.NewsDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".allNews.AllNewsActivity"
+            android:name="rk.information.news.allNews.AllNewsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>

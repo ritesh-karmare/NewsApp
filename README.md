@@ -1,5 +1,4 @@
-# NewsApp-MAF
-This is a news app demo for *Majid Al Futtaim*
+# NewsApp
 
 ### Application Functionality/Features
 
@@ -10,11 +9,11 @@ This is a news app demo for *Majid Al Futtaim*
 
 
 #### Screen 1 - News List
-<img src="https://github.com/ritesh-karmare/NewsApp-MAF/blob/master/news_list.png" width="200" height="400" />
+<img src="https://github.com/ritesh-karmare/NewsApp/blob/master/news_list.png" width="200" height="400" />
 
 
 #### Screen 2 - News Details
-<img src="https://github.com/ritesh-karmare/NewsApp-MAF/blob/master/news_detail.png" width="200" height="400" />
+<img src="https://github.com/ritesh-karmare/NewsApp/blob/master/news_detail.png" width="200" height="400" />
 
 ### Architecture
 
