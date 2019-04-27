@@ -1,5 +1,4 @@
 # NewsApp-MAF
-This is a news app demo for *Majid Al Futtaim*
 
 ### Application Functionality/Features
 
@@ -29,4 +28,4 @@ From View the Presenter is initialised and we call the function in the Presenter
 
 1. Networking - *Retrofit, OkHttp* <br />
 2. JSON2Data - *GSON* <br />
-3. imageLoading - *Glide*
+3. ImageLoading - *Glide*
