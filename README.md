@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 # NewsApp
 =======
-# NewsApp-MAF
->>>>>>> 325ff10358a020d4814c6f351d36db71f438de4e
 
 ### Application Functionality/Features
 
