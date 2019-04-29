@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -22,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 ext {
@@ -57,14 +63,16 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$GLIDE"
     annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_COMPILER"
 
-
+    // Data binding component
+    kapt "androidx.databinding:databinding-compiler:3.4.0"
+    implementation "androidx.core:core-ktx:1.0.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation "androidx.core:core-ktx:1.0.1"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
 repositories {
     mavenCentral()

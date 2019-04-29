@@ -16,7 +16,6 @@
 
         <activity
             android:name="rk.information.news.newsDetails.NewsDetailsActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
 
         <activity

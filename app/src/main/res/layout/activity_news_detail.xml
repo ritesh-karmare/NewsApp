@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="articleData"
+            type="rk.information.news.network.responseModel.ArticleData" />
+    </data>
 
     <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,9 +24,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="TextView"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
+                android:text="@{articleData.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +55,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="TextView"
+                android:text="@{articleData.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,10 +66,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@android:color/black"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="TextView"
+                android:text="@{articleData.content}"
+                android:textColor="@android:color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,15 +81,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:textStyle="italic"
-                android:autoLink="web"
                 android:layout_marginEnd="8dp"
-                android:text="TextView"
+                android:text="@{articleData.url}"
+                android:autoLink="web"
+                android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_content" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+</layout>
