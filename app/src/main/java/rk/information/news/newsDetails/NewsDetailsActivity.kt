@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 import rk.information.news.R
 import rk.information.news.databinding.ActivityNewsDetailBinding
 import rk.information.news.network.responseModel.ArticleData
+import java.util.*
 
 class NewsDetailsActivity : AppCompatActivity() {
 
@@ -15,6 +16,8 @@ class NewsDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_news_detail)
         val articleData = intent.getSerializableExtra("articleData") as ArticleData

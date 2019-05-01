@@ -25,7 +25,7 @@ The architecture of this android project is implemented as MVP (Model-View-Prese
 From View the Presenter is initialised and we call the function in the Presenter to fetch the data from server, which in return sets the data in the Model data classes and return the Model to the View.
 
 
-### Core Dependencies Used:
+### Core Deps Used:
 
 1. Networking - *Retrofit, OkHttp* <br />
 2. JSON2Data - *GSON* <br />

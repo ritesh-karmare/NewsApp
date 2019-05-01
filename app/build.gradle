@@ -47,6 +47,30 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation Deps.APP_COMPAT
+    implementation Deps.CONSTRAINT_LAYOUT
+    implementation Deps.RECYCLER_VIEW
+    implementation Deps.SWIPEREFRESH
+    implementation Deps.CARDVIEW
+
+    implementation Deps.OKHTTP_INTERCEPTOR
+    implementation Deps.RETROFIT
+    implementation Deps.GSON_CONVERTER
+    implementation Deps.GSON
+    implementation Deps.GLIDE
+    annotationProcessor Deps.GLIDE_COMPILER
+
+    kapt Deps.DATABINDING_COMPILER
+    implementation Deps.KOTLIN_CORE
+    implementation Deps.KOTLIN_JDK
+
+    testImplementation Deps.JUNIT
+    androidTestImplementation Deps.TEST_RUNNER
+    androidTestImplementation Deps.TEST_ESPRESSO
+
+/*
+
     implementation "androidx.appcompat:appcompat:$APP_COMPAT"
     implementation "androidx.constraintlayout:constraintlayout:$CONSTRAINT_LAYOUT"
     implementation "androidx.recyclerview:recyclerview:$ANDROID_X"
@@ -72,6 +96,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+*/
 
 }
 repositories {
