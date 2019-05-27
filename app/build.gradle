@@ -60,6 +60,8 @@ dependencies {
     implementation Deps.GSON
     implementation Deps.GLIDE
     annotationProcessor Deps.GLIDE_COMPILER
+    implementation Deps.LIFECYCLE_VIEWMODEL
+    implementation Deps.LIFECYCLE_EXTENSIONS
 
     kapt Deps.DATABINDING_COMPILER
     implementation Deps.KOTLIN_CORE
@@ -68,36 +70,6 @@ dependencies {
     testImplementation Deps.JUNIT
     androidTestImplementation Deps.TEST_RUNNER
     androidTestImplementation Deps.TEST_ESPRESSO
-
-/*
-
-    implementation "androidx.appcompat:appcompat:$APP_COMPAT"
-    implementation "androidx.constraintlayout:constraintlayout:$CONSTRAINT_LAYOUT"
-    implementation "androidx.recyclerview:recyclerview:$ANDROID_X"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$ANDROID_X"
-    implementation "androidx.cardview:cardview:$ANDROID_X"
-
-    // Retrofit and OkHttp networking libraries
-    implementation "com.squareup.okhttp3:logging-interceptor:$OKHTTP"
-    implementation "com.squareup.retrofit2:retrofit:$RETROFIT"
-    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT"
-    implementation "com.google.code.gson:gson:$GSON"
-
-    // Glide - imageLoading
-    implementation "com.github.bumptech.glide:glide:$GLIDE"
-    annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_COMPILER"
-
-    // Data binding component
-    kapt "androidx.databinding:databinding-compiler:3.4.0"
-    implementation "androidx.core:core-ktx:1.0.1"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-*/
 
 }
 repositories {

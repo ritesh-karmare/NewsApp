@@ -13,6 +13,8 @@ public class Deps {
     private static final String V_GLIDE_COMPILER = "4.6.1";
 
     private static final String V_DATABINDING_COMPILER = "3.4.0";
+    private static final String V_LIFECYCLE_VIEWMODEL = "1.1.0";
+    private static final String V_LIFECYCLE_EXTENSIONS = "1.1.0";
     private static final String V_CORE_KTX = "1.0.1";
     private static final String V_KOTLIN = "1.3.31";
     private static final String V_JUNIT = "4.12";
@@ -40,7 +42,10 @@ public class Deps {
 
     // Data binding component
     // KAPT
-    public static final String DATABINDING_COMPILER = "androidx.databinding:databinding-compiler:"+V_DATABINDING_COMPILER;
+    public static final String DATABINDING_COMPILER = "androidx.databinding:databinding-compiler:" + V_DATABINDING_COMPILER;
+    public static final String LIFECYCLE_VIEWMODEL = "android.arch.lifecycle:viewmodel:" + V_LIFECYCLE_VIEWMODEL;
+    public static final String LIFECYCLE_EXTENSIONS = "android.arch.lifecycle:extensions:" + V_LIFECYCLE_EXTENSIONS;
+
     public static final String KOTLIN_CORE = "androidx.core:core-ktx:"+V_CORE_KTX;
     public static final String KOTLIN_JDK = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:"+V_KOTLIN;
 

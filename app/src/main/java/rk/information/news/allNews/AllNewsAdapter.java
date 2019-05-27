@@ -8,20 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
-import rk.information.news.R;
-import rk.information.news.network.responseModel.ArticleData;
-import rk.information.news.newsDetails.NewsDetailsActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rk.information.news.R;
+import rk.information.news.network.responseModel.ArticleData;
+import rk.information.news.newsDetails.NewsDetailsActivity;
 
 /**
  * Created by Ritesh on 04/09/2019.
@@ -54,13 +54,9 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-
         if (viewHolder instanceof AllNewsViewHolder) {
             populateItemRows((AllNewsViewHolder) viewHolder, position);
-        } else if (viewHolder instanceof LoadingViewHolder) {
-            showLoadingView((LoadingViewHolder) viewHolder, position);
         }
-
     }
 
     @Override
@@ -70,7 +66,6 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     /**
      * The following method decides the type of ViewHolder to display in the RecyclerView
-     *
      * @param position
      * @return
      */
@@ -86,11 +81,8 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // Populate item with news headline and image
     private void populateItemRows(final AllNewsViewHolder holder, final int position) {
-
         final ArticleData newsArticle = allNewsList.get(position);
-
         holder.tvNewsHeadline.setText(newsArticle.getTitle());
-
         Glide.with(context)
                 .load(newsArticle.getUrlToImage())
                 .apply(new RequestOptions()
@@ -101,10 +93,9 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.cvNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectToNewsPage(holder.ivBanners,allNewsList.get(position));
+                redirectToNewsPage(holder.ivBanners, allNewsList.get(position));
             }
         });
-
     }
 
     // Starting news details activity with shared element transition
@@ -115,7 +106,7 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             ActivityOptionsCompat options =
                     ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,
-                            ivBanner,context.getResources().getString(R.string.list_to_detail));
+                            ivBanner, context.getResources().getString(R.string.list_to_detail));
 
             ActivityCompat.startActivity(context, newsDetailsIntent, options.toBundle());
 
@@ -126,8 +117,6 @@ class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
-    }
 
     /*
     Helper methods

@@ -5,6 +5,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -12,47 +15,63 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.List;
 
 import rk.information.news.R;
+import rk.information.news.databinding.ActivityAllNewsBinding;
 import rk.information.news.network.responseModel.ArticleData;
 
 /**
  * Created by Ritesh on 04/09/2019.
  */
 
-public class AllNewsActivity extends AppCompatActivity implements AllNewsContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class AllNewsActivity extends AppCompatActivity implements
+        SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView rvNews;
+    private SwipeRefreshLayout srNews;
 
     private AllNewsAdapter allNewsAdapter;
-    private AllNewsContract.Presenter presenter;
+    private AllNewsViewModel viewModelDemo;
 
     private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_news);
-        setupViews();
-        initScrollListener();
-    }
-
-    private void setupViews() {
         try {
-            SwipeRefreshLayout srNews = findViewById(R.id.sr_news);
-            rvNews = findViewById(R.id.rv_news);
-
-            srNews.setOnRefreshListener(this);
-
-            rvNews.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            rvNews.setAdapter(allNewsAdapter = new AllNewsAdapter(this));
-
-            presenter = new AllNewsPresenter(this);
-            presenter.fetchAllNews(false);
+            initBindings();
+            setupViews();
+            initListeners();
+            initObservers();
+            fetchNews(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void initScrollListener() {
+    // Initialize ViewModel, DataBinding
+    private void initBindings() {
+        viewModelDemo = ViewModelProviders.of(this).
+                get(AllNewsViewModel.class);
+        // Inflate view and obtain an instance of the binding class.
+        ActivityAllNewsBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_news);
+        // Assign the component to a property in the binding class.
+        dataBinding.setViewModel(viewModelDemo);
+        // Specify the current activity as the lifecycle owner.
+        dataBinding.setLifecycleOwner(this);
+
+        rvNews = dataBinding.rvNews;
+        srNews = dataBinding.srNews;
+    }
+
+    // Setup RecyclerView
+    private void setupViews() {
+        rvNews.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rvNews.setHasFixedSize(true);
+        rvNews.setAdapter(allNewsAdapter = new AllNewsAdapter(this));
+    }
+
+    // Add SwipeRefresh and RecyclerView's scroll listener
+    private void initListeners() {
+        srNews.setOnRefreshListener(this);
         rvNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -67,7 +86,7 @@ public class AllNewsActivity extends AppCompatActivity implements AllNewsContrac
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == allNewsAdapter.getList().size() - 1) {
                         //bottom of list!
-                        loadMore();
+                        fetchNews(true);
                         isLoading = true;
                     }
                 }
@@ -75,38 +94,43 @@ public class AllNewsActivity extends AppCompatActivity implements AllNewsContrac
         });
     }
 
-    private void loadMore() {
-        allNewsAdapter.getList().add(null);
-        presenter.fetchAllNews(true);
-        rvNews.post(new Runnable() {
-            public void run() {
-                allNewsAdapter.notifyItemInserted(allNewsAdapter.getList().size() - 1);
+    // Observe the data changes from ViewModel
+    private void initObservers() {
+        viewModelDemo.articleLiveDataList.observe(this, new Observer<List<ArticleData>>() {
+            @Override
+            public void onChanged(List<ArticleData> articleDataList) {
+                poulateAllNews(articleDataList);
+            }
+        });
+
+        viewModelDemo.isLoadingLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                revokeLoadingMore(isLoading);
+            }
+        });
+
+        viewModelDemo.errorCodeLiveData.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                onFailure(integer);
             }
         });
     }
 
-    @Override
-    public void poulateAllNews(List<ArticleData> allNewsList, boolean isLoadMore) {
-        revokeLoadingMore(isLoadMore);
-        allNewsAdapter.addAll(allNewsList);
-        allNewsAdapter.notifyDataSetChanged();
+    // On Scroll load more data
+    private void fetchNews(boolean isLoadMore) {
+        viewModelDemo.fetchAllNews(isLoadMore);
+        if (isLoadMore) {
+            allNewsAdapter.getList().add(null);
+            allNewsAdapter.notifyItemInserted(allNewsAdapter.getList().size() - 1);
+        } else srNews.setRefreshing(true);
     }
 
-    @Override
-    public void onFailure(int errCode, boolean isLoadMore) {
-        revokeLoadingMore(isLoadMore);
-        switch (errCode) {
-            case -1:
-                Toast.makeText(this, getString(R.string.err_connecting), Toast.LENGTH_SHORT).show();
-                break;
-            case 426:
-                Toast.makeText(this, getString(R.string.err_too_many_request), Toast.LENGTH_SHORT).show();
-            default:
-                Toast.makeText(this, getString(R.string.err_server), Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    // Removed loading views
     private void revokeLoadingMore(boolean isLoadMore) {
+        if (srNews.isRefreshing()) srNews.setRefreshing(false);
+
         if (isLoadMore) {
             isLoading = false;
             allNewsAdapter.getList().remove(allNewsAdapter.getList().size() - 1);
@@ -114,15 +138,30 @@ public class AllNewsActivity extends AppCompatActivity implements AllNewsContrac
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.unBind();
+    // Add articleDataList to adapter
+    public void poulateAllNews(List<ArticleData> allNewsList) {
+        allNewsAdapter.addAll(allNewsList);
+        allNewsAdapter.notifyDataSetChanged();
+    }
+
+    // Display failure message while performing REST API call
+    public void onFailure(int errCode) {
+        switch (errCode) {
+            case -1:
+                Toast.makeText(this, getString(R.string.err_connecting), Toast.LENGTH_SHORT).show();
+                break;
+            case 426:
+                Toast.makeText(this, getString(R.string.err_too_many_request), Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, getString(R.string.err_server), Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override
     public void onRefresh() {
         allNewsAdapter.reset();
-        presenter.fetchAllNews(false);
+        viewModelDemo.fetchAllNews(false);
     }
 }

@@ -1,51 +1,49 @@
 package rk.information.news.allNews;
 
-import rk.information.news.network.responseModel.AllNewsRes;
-import rk.information.news.network.APIImpl;
-import rk.information.news.network.ApiClient;
-
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rk.information.news.network.APIImpl;
+import rk.information.news.network.ApiClient;
+import rk.information.news.network.responseModel.AllNewsRes;
+import rk.information.news.network.responseModel.ArticleData;
 
-/**
- * Created by Ritesh on 04/09/2019.
- */
+public class AllNewsViewModel extends ViewModel {
 
-public class AllNewsPresenter implements AllNewsContract.Presenter {
 
-    private AllNewsContract.View viewCallback;
     private int pageNum = 1;
 
-    AllNewsPresenter(AllNewsContract.View viewCallback) {
-        this.viewCallback = viewCallback;
-    }
+    MutableLiveData<List<ArticleData>> articleLiveDataList = new MutableLiveData<>();
+    MutableLiveData<Boolean> isLoadingLiveData = new MutableLiveData<>();
+    MutableLiveData<Integer> errorCodeLiveData = new MutableLiveData<>();
 
-    @Override
     public void fetchAllNews(final boolean isLoadMore) {
         try {
-
+            if (!isLoadMore) pageNum = 1;
             APIImpl apiImpl = ApiClient.getClient().create(APIImpl.class);
             Call<AllNewsRes> call = apiImpl.getAllNews(pageNum);
             call.enqueue(new Callback<AllNewsRes>() {
                 @Override
                 public void onResponse(@NonNull Call<AllNewsRes> call, @NonNull Response<AllNewsRes> response) {
                     try {
+                        isLoadingLiveData.postValue(isLoadMore);
                         if (response.isSuccessful()) {
                             AllNewsRes newsData = response.body();
                             if (newsData != null &&
                                     newsData.getArticles() != null &&
                                     newsData.getArticles().size() > 0) {
-                                if (viewCallback != null)
-                                    viewCallback.poulateAllNews(newsData.getArticles(), isLoadMore);
+                                articleLiveDataList.postValue(newsData.getArticles());
                                 managePageNum(true);
                             }
-                        } else {
-                            managePageNum(false);
-                            if (viewCallback != null)
-                                viewCallback.onFailure(426, isLoadMore);
-                        }
+                        } else
+                            errorCodeLiveData.postValue(426);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         managePageNum(false);
@@ -56,19 +54,13 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
                 public void onFailure(@NonNull Call<AllNewsRes> call, @NonNull Throwable t) {
                     t.printStackTrace();
                     managePageNum(false);
-                    if (viewCallback != null)
-                        viewCallback.onFailure(-1,isLoadMore);
+                    errorCodeLiveData.setValue(-1);
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             managePageNum(false);
         }
-    }
-
-    @Override
-    public void unBind() {
-        viewCallback = null;
     }
 
     // Increment the pageNum if req was successful, else decrement
@@ -80,4 +72,5 @@ public class AllNewsPresenter implements AllNewsContract.Presenter {
                 pageNum--;
         }
     }
+
 }
