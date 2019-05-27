@@ -10,11 +10,11 @@
 
 
 #### Screen 1 - News List
-<img src="https://github.com/ritesh-karmare/NewsApp/blob/master/news_list.png" width="200" height="400" />
+<img src="https://raw.githubusercontent.com/ritesh-karmare/NewsApp-MAF/master/news_list.png" width="200" height="400" />
 
 
 #### Screen 2 - News Details
-<img src="https://github.com/ritesh-karmare/NewsApp/blob/master/news_detail.png" width="200" height="400" />
+<img src="https://raw.githubusercontent.com/ritesh-karmare/NewsApp-MAF/master/news_detail.png" width="200" height="400" />
 
 ### Architecture
 
