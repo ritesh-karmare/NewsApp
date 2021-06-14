@@ -8,7 +8,7 @@ The architecture of this android project is implemented as MVVM (Model-View-View
 This projects uses the combination of MVVM + DataBinding + LiveData
 
 
-### Core Deps Used:
+### Core Version Used:
 
 1. Networking - *Retrofit, OkHttp* <br />
 2. JSON2Data - *GSON* <br />

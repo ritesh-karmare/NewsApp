@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
@@ -9,8 +8,8 @@ android {
         applicationId "rk.information.news"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BASE_URL", '"https://newsapi.org"'
@@ -28,48 +27,45 @@ android {
         enabled = true
     }
 
-}
+    buildFeatures {
+        viewBinding true
+    }
 
-ext {
-
-    APP_COMPAT = "1.0.2"
-    ANDROID_X = "1.0.0"
-    CONSTRAINT_LAYOUT = "1.1.3"
-
-    OKHTTP = '3.11.0'
-    RETROFIT = '2.4.0'
-    GSON = '2.8.5'
-
-    GLIDE = '4.7.1'
-    GLIDE_COMPILER = '4.6.1'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation Deps.APP_COMPAT
-    implementation Deps.CONSTRAINT_LAYOUT
-    implementation Deps.RECYCLER_VIEW
-    implementation Deps.SWIPEREFRESH
-    implementation Deps.CARDVIEW
+    implementation StandardLibs.APP_COMPAT
+    implementation StandardLibs.CONSTRAINT_LAYOUT
+    implementation StandardLibs.RECYCLER_VIEW
+    implementation StandardLibs.SWIPEREFRESH
+    implementation StandardLibs.CARDVIEW
+    implementation StandardLibs.MATERIAL
+    implementation StandardLibs.DATASTORE_PREFERENCES
+    implementation StandardLibs.BROWSER
 
-    implementation Deps.OKHTTP_INTERCEPTOR
-    implementation Deps.RETROFIT
-    implementation Deps.GSON_CONVERTER
-    implementation Deps.GSON
-    implementation Deps.GLIDE
-    annotationProcessor Deps.GLIDE_COMPILER
-    implementation Deps.LIFECYCLE_VIEWMODEL
-    implementation Deps.LIFECYCLE_EXTENSIONS
+    implementation Networking.OKHTTP_INTERCEPTOR
+    implementation Networking.RETROFIT
+    implementation Networking.GSON_CONVERTER
+    implementation Networking.GSON
 
-    kapt Deps.DATABINDING_COMPILER
-    implementation Deps.KOTLIN_CORE
-    implementation Deps.KOTLIN_JDK
+    implementation ImageLoading.GLIDE
+    annotationProcessor ImageLoading.GLIDE_COMPILER
 
-    testImplementation Deps.JUNIT
-    androidTestImplementation Deps.TEST_RUNNER
-    androidTestImplementation Deps.TEST_ESPRESSO
+    implementation LifeCycle.LIFECYCLE_VIEWMODEL
+    implementation LifeCycle.LIFECYCLE_EXTENSIONS
+    implementation LifeCycle.LIFECYCLE_LIVEDATA
+    implementation LifeCycle.LIFECYCLE_RUNTIME
+
+    testImplementation Testing.JUNIT
+    androidTestImplementation Testing.TEST_RUNNER
+    androidTestImplementation Testing.TEST_ESPRESSO
 
 }
 repositories {

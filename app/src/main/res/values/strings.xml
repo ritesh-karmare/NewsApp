@@ -5,4 +5,11 @@
     <string name="err_too_many_request">Hold on !! That\'s a lot of requests</string>
     <string name="err_server">Something\'s not right with the server. Please try again after sometime.</string>
     <string name="source_url_text">Source url : %s</string>
+    <string name="filter">Filter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="topic">Topic</string>
+    <string name="add_topic">Add Topic</string>
+    <string name="save">Save</string>
+    <string name="proceed">Proceed</string>
 </resources>

@@ -1,0 +1,21 @@
+object Version {
+    // VERSIONS
+    const val V_APPCOMPAT = "1.0.2"
+    const val V_ANDROID_X = "1.0.0"
+    const val V_CONSTRAINT_LAYOUT = "1.1.3"
+    const val V_MATERIAL = "1.3.0"
+    const val V_OKHTTP = "3.11.0"
+    const val V_RETROFIT = "2.4.0"
+    const val V_GSON = "2.8.5"
+    const val V_GLIDE = "4.7.1"
+    const val V_GLIDE_COMPILER = "4.6.1"
+    const val V_DATASTORE_PREFERENCES = "1.0.0-beta01"
+    const val V_DATABINDING_COMPILER = "3.4.0"
+    const val V_LIFECYCLE_VIEWMODEL = "2.3.1"
+    const val V_LIFECYCLE_EXTENSIONS = "1.1.0"
+    const val V_CORE_KTX = "1.0.1"
+    const val V_KOTLIN = "1.3.31"
+    const val V_JUNIT = "4.12"
+    const val V_TEST_RUNNER = "1.1.1"
+    const val V_TEST_ESPRESSO = "3.1.1"
+}
